@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  connection: local
+  roles:
+    - andrewrothstein.kind
+  post_tasks:
+    - name: Create K8s Cluster
+      shell: kind create cluster --config ./configs/kind-config --kubeconfig ./kind-kube-config --wait 10m
+
+
