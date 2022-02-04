@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.define "cluster" do |config|
-        config.vm.box = "centos/8"
+        config.vm.box = "centos/7"
         config.vm.network "forwarded_port", guest: 80, host: 5080
         config.vm.network "forwarded_port", guest: 22, host: 5022
 
