@@ -1,0 +1,1 @@
+localhost ansible_user=vagrant ansible_port=5022
