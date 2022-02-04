@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
+- name: VM Setup
+  hosts: localhost
   become: yes
   vars_files:
     - ./vars/default.yml
@@ -7,4 +8,49 @@
     - { role: geerlingguy.docker, docker_version: 20.10.12 }
     - { role: andrewrothstein.kind, kind_ver: v0.11.1 }
 
+  post_tasks:
+    - name: Ensure group "docker" exists
+      group:
+        name: docker
+        state: present
+
+    - name: Add the user 'vagrant' to docker group
+      user:
+        name: vagrant
+        groups: docker
+        append: yes
+
+
+- name: K8s Setup
+  hosts: localhost
+  vars_files:
+    - ./vars/default.yml
+  vars:
+    k8s_version: v1.21.1
+  tasks:
+    - name: Copy kind-config.yml
+      copy:
+        src: ./configs/kind-config.yml
+        dest: "{{ home_dir }}/kind-config.yml"
+
+    - name: Get existing Cluster
+      command: /usr/local/bin/kind get clusters
+      register: existing_cluster
+
+    - name: Create K8s Cluster
+      command: |
+        /usr/local/bin/kind create cluster 
+        --name "{{ cluster_name }}" 
+        --config "{{ home_dir }}"/kind-config.yml 
+        --kubeconfig "{{ home_dir }}"/kind-kubeconfig
+        --image kindest/node:"{{ k8s_version }}" 
+        --wait 5m
+      when: existing_cluster.stderr == "No kind clusters found."
+
+    - name: Download kubectl
+      become: yes
+      get_url:
+        url: "https://dl.k8s.io/release/{{ k8s_version }}/bin/linux/amd64/kubectl"
+        dest: /usr/local/bin/kubectl
+        mode: 0755
 
