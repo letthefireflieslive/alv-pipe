@@ -15,6 +15,7 @@
 `ansible-playbook install.yml -i inventory/local -K`
 
 this will install 
+- docker ce-20.10.12
 - single node K8s Cluster via Kind v0.11.1
 - install Bitnami's Sealed Secret vX
 - istio vX
