@@ -1,3 +1,5 @@
+SSH_PUB_KEY="~/.ssh/id_rsa.pub"
+
 Vagrant.configure("2") do |config|
     config.vm.provider "virtualbox" do |v|
         v.memory = 9000
@@ -8,6 +10,12 @@ Vagrant.configure("2") do |config|
         config.vm.box = "centos/8"
         config.vm.network "forwarded_port", guest: 80, host: 5080
         config.vm.network "forwarded_port", guest: 22, host: 5022
+
+        #Add your local SSH public key to vagrant box
+        config.vm.provision "file", source: SSH_PUB_KEY, destination: "~/.ssh/me.pub"
+        config.vm.provision "shell", inline: <<-SHELL
+            cat /home/vagrant/.ssh/me.pub >> /home/vagrant/.ssh/authorized_keys
+        SHELL
     end
 
 end
