@@ -1,10 +1,10 @@
 ---
 - hosts: localhost
-  connection: local
+  become: yes
+  vars_files:
+    - ./vars/default.yml
   roles:
-    - andrewrothstein.kind
-  post_tasks:
-    - name: Create K8s Cluster
-      shell: kind create cluster --config ./configs/kind-config --kubeconfig ./kind-kube-config --wait 10m
+    - { role: geerlingguy.docker, docker_version: 20.10.12 }
+    - { role: andrewrothstein.kind, kind_ver: v0.11.1 }
 
 
