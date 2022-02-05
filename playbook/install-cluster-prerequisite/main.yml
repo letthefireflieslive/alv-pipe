@@ -1,6 +1,6 @@
 ---
-- name: Docker and Kind Setup
-  hosts: localhost
+- name: Install Cluster Pre-requisites
+  hosts: vagrantbox
   become: yes
   tags:
     - docker

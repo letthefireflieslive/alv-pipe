@@ -2,7 +2,7 @@ SSH_PUB_KEY="~/.ssh/id_rsa.pub"
 
 Vagrant.configure("2") do |config|
     config.vm.provider "virtualbox" do |v|
-        v.memory = 9000
+        v.memory = 13000
         v.cpus = 4
     end
 

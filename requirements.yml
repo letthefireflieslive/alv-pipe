@@ -8,3 +8,6 @@ roles:
 
   - name: andrewrothstein.kubeseal
     version: v1.0.7
+
+  - name: andrewrothstein.kubernetes-helm
+    version: v2.0.11

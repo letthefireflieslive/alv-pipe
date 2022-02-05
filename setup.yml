@@ -1,4 +1,6 @@
 ---
-- import_playbook: playbook/docker-kind/main.yml
-- import_playbook: playbook/k8s/main.yml
-- import_playbook: playbook/sealed-secrets/main.yml
+- import_playbook: playbook/install-cluster-prerequisite/main.yml
+- import_playbook: playbook/create-cluster/main.yml
+- import_playbook: playbook/install-sealed-secret/main.yml
+- import_playbook: playbook/install-istio/main.yml
+#- import_playbook: playbook/install-argo/main.yml

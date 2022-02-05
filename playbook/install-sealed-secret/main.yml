@@ -1,0 +1,25 @@
+---
+- name: Install sealed secret
+  hosts: vagrantbox
+  become: yes
+  tags:
+    - ss
+
+  vars_files:
+    - ../vars.yml
+
+  vars:
+    - sealedsecret_controller_filename: manifest-controller_v0.17.3.yaml
+    - temp_sealsecret_controller_path: "/tmp/{{ sealedsecret_controller_filename }}"
+
+  roles:
+    - { role: andrewrothstein.kubeseal, kubeseal_ver: v0.16.0 }
+
+  tasks:
+    - name: Upload kubeseal controller manifest to master
+      copy:
+        src: "./{{ sealedsecret_controller_filename }}"
+        dest: "{{ temp_sealsecret_controller_path }}"
+
+    - name: Install sealsecret to cluster
+      command: "{{ bin_dir }}/kubectl --kubeconfig {{ kube_config }} apply -f {{ temp_sealsecret_controller_path }}"
