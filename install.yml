@@ -1,9 +1,11 @@
 ---
+# === VM Setup Play ====
 - name: VM Setup
   hosts: localhost
   become: yes
   vars_files:
-    - ./vars/default.yml
+    - ./vars/common.yml
+
   roles:
     - { role: geerlingguy.docker, docker_version: 20.10.12 }
     - { role: andrewrothstein.kind, kind_ver: v0.11.1 }
@@ -14,19 +16,20 @@
         name: docker
         state: present
 
-    - name: Add the user 'vagrant' to docker group
+    - name: Add the OS user to docker group
       user:
-        name: vagrant
+        name: "{{ os_user }}"
         groups: docker
         append: yes
 
-
+# === K8s Setup Play ====
 - name: K8s Setup
   hosts: localhost
   vars_files:
-    - ./vars/default.yml
+    - ./vars/common.yml
   vars:
     k8s_version: v1.21.1
+
   tasks:
     - name: Copy kind-config.yml
       copy:
@@ -34,12 +37,12 @@
         dest: "{{ home_dir }}/kind-config.yml"
 
     - name: Get existing Cluster
-      command: /usr/local/bin/kind get clusters
+      command: "{{ bin_dir }}/kind get clusters"
       register: existing_cluster
 
     - name: Create K8s Cluster
       command: |
-        /usr/local/bin/kind create cluster 
+        "{{ bin_dir }}"/kind create cluster 
         --name "{{ cluster_name }}" 
         --config "{{ home_dir }}"/kind-config.yml 
         --kubeconfig "{{ home_dir }}"/kind-kubeconfig
@@ -51,6 +54,13 @@
       become: yes
       get_url:
         url: "https://dl.k8s.io/release/{{ k8s_version }}/bin/linux/amd64/kubectl"
-        dest: /usr/local/bin/kubectl
+        dest: "{{ bin_dir }}/kubectl"
         mode: 0755
+        owner: "{{ os_user }}"
+
+    - name: Get all pods
+      command: "{{ bin_dir }}/kubectl get pods -A --kubeconfig {{ home_dir }}/kind-kubeconfig"
+      register: get_pods
+
+    - debug: msg="{{ get_pods.stdout.split('\n') }}"
 
