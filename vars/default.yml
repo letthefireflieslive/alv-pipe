@@ -1,3 +1,0 @@
-docker_install_compose: false
-home_dir: /home/vagrant
-cluster_name: kind
