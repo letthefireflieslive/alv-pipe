@@ -9,7 +9,8 @@
 `vagrant up`
 
 # Install Playbook Dependencies
-`ansible-galaxy install -r requirements.yml`
+`ansible-galaxy install -r requirements.yml && 
+ansible-galaxy collection install -r requirements.yml -p ~/.ansible/collections`
 
 # Setup
 `ansible-playbook setup.yml -i inventory/local`
@@ -18,7 +19,7 @@ this will install
 - docker ce-20.10.12
 - single node K8s Cluster via Kind v0.11.1
 - install kubeseal v0.16.0
-- install Bitnami's Sealed Secret vX
+- install bitnami sealed secret v0.17.3
 - istio vX
 - argoCD, ArgoWorkflow, ArgoEvents vX
 - test Springboot Application
