@@ -1,0 +1,25 @@
+---
+- name: Sealed Secret Setup
+  hosts: localhost
+  become: yes
+  tags:
+    - ss
+    -
+  vars_files:
+    - ../vars.yml
+
+  vars:
+    - controller_filename: manifest-controller_v0.17.3.yaml
+    - temp_controller_path: "/tmp/{{ controller_filename }}"
+
+  roles:
+    - { role: andrewrothstein.kubeseal, kubeseal_ver: v0.16.0 }
+
+  tasks:
+    - name: Upload controller manifest to master
+      copy:
+        src: "./{{ controller_filename }}"
+        dest: "{{ temp_controller_path }}"
+
+    - name: kubectl apply controller
+      command: "{{ bin_dir }}/kubectl --kubeconfig {{ kube_config }} apply -f {{ temp_controller_path }}"

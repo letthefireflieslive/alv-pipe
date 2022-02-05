@@ -5,8 +5,9 @@
   tags:
     - docker
     - kind
+
   vars_files:
-    - ../vars/common.yml
+    - ../vars.yml
 
   roles:
     - { role: geerlingguy.docker, docker_version: 20.10.12 }

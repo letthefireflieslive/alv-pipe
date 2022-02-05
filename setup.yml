@@ -1,13 +1,4 @@
 ---
-- import_playbook: plays/docker-kind.yml
-- import_playbook: plays/k8s.yml
-- import_playbook: plays/sealed-secrets.yml
-
-
-
-
-
-
-
-
-
+- import_playbook: playbook/docker-kind/main.yml
+- import_playbook: playbook/k8s/main.yml
+- import_playbook: playbook/sealed-secrets/main.yml

@@ -3,3 +3,4 @@ os_user: vagrant
 home_dir: "/home/{{ os_user }}"
 bin_dir: /usr/local/bin
 cluster_name: kind
+kube_config: "{{ home_dir }}/.kube/config"
