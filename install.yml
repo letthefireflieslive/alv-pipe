@@ -25,6 +25,7 @@
 # === K8s Setup Play ====
 - name: K8s Setup
   hosts: localhost
+  become: yes
   vars_files:
     - ./vars/common.yml
   vars:
@@ -51,7 +52,6 @@
       when: existing_cluster.stderr == "No kind clusters found."
 
     - name: Download kubectl
-      become: yes
       get_url:
         url: "https://dl.k8s.io/release/{{ k8s_version }}/bin/linux/amd64/kubectl"
         dest: "{{ bin_dir }}/kubectl"
@@ -61,6 +61,5 @@
     - name: Get all pods
       command: "{{ bin_dir }}/kubectl get pods -A --kubeconfig {{ home_dir }}/kind-kubeconfig"
       register: get_pods
-
     - debug: msg="{{ get_pods.stdout.split('\n') }}"
 
