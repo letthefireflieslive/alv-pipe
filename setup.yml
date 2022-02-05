@@ -1,0 +1,13 @@
+---
+- import_playbook: plays/docker-kind.yml
+- import_playbook: plays/k8s.yml
+- import_playbook: plays/sealed-secrets.yml
+
+
+
+
+
+
+
+
+
