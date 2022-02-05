@@ -1,40 +1,18 @@
 ---
-# === VM Setup Play ====
-- name: VM Setup
-  hosts: localhost
-  become: yes
-  vars_files:
-    - ./vars/common.yml
-
-  roles:
-    - { role: geerlingguy.docker, docker_version: 20.10.12 }
-    - { role: andrewrothstein.kind, kind_ver: v0.11.1 }
-
-  post_tasks:
-    - name: Ensure group "docker" exists
-      group:
-        name: docker
-        state: present
-
-    - name: Add the OS user to docker group
-      user:
-        name: "{{ os_user }}"
-        groups: docker
-        append: yes
-
-# === K8s Setup Play ====
 - name: K8s Setup
   hosts: localhost
   become: yes
+  tags:
+    - k8s
   vars_files:
-    - ./vars/common.yml
+    - ../vars/common.yml
   vars:
     k8s_version: v1.21.1
 
   tasks:
     - name: Copy kind-config.yml
       copy:
-        src: ./configs/kind-config.yml
+        src: ../configs/kind-config.yml
         dest: "{{ home_dir }}/kind-config.yml"
 
     - name: Get existing Cluster
@@ -62,4 +40,3 @@
       command: "{{ bin_dir }}/kubectl get pods -A --kubeconfig {{ home_dir }}/kind-kubeconfig"
       register: get_pods
     - debug: msg="{{ get_pods.stdout.split('\n') }}"
-

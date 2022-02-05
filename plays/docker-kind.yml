@@ -1,0 +1,25 @@
+---
+- name: Docker and Kind Setup
+  hosts: localhost
+  become: yes
+  tags:
+    - docker
+    - kind
+  vars_files:
+    - ../vars/common.yml
+
+  roles:
+    - { role: geerlingguy.docker, docker_version: 20.10.12 }
+    - { role: andrewrothstein.kind, kind_ver: v0.11.1 }
+
+  post_tasks:
+    - name: Ensure group "docker" exists
+      group:
+        name: docker
+        state: present
+
+    - name: Add the OS user to docker group
+      user:
+        name: "{{ os_user }}"
+        groups: docker
+        append: yes
