@@ -1,1 +1,2 @@
+[vagrantbox]
 localhost ansible_user=vagrant ansible_port=5022 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
