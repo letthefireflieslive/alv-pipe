@@ -1,0 +1,32 @@
+---
+- name: Install argo cd
+  hosts: vagrantbox
+  become: yes
+  tags:
+    - argocd
+
+  vars_files:
+    - ../vars.yml
+
+  vars:
+    - argocd_namespace: argocd
+    - argocd_manifest_filename: manifest-argocd_v2.2.5.yml
+    - temp_argocd_manifest_filename: "/tmp/{{ argocd_manifest_filename }}"
+
+  tasks:
+    - name: Create argocd namespace
+      command: "{{ kubectl }}  create namespace {{ argocd_namespace }}"
+      ignore_errors: yes
+
+    - name: Upload argocd controller manifest
+      copy:
+        src: "./{{ argocd_manifest_filename }}"
+        dest: "{{ temp_argocd_manifest_filename }}"
+
+    - name: Install argocd
+      command: "{{ kubectl }} apply -n {{ argocd_namespace }} -f {{ temp_argocd_manifest_filename }}"
+
+    - name: Retrieve default 'admin' password
+      command: "{{ kubectl }} apply -n {{ argocd_namespace }} argocd get secret argocd-initial-admin-secret -o jsonpath=\"{.data.password}\" | base64 -d; echo"
+      register: argocd_admin_password
+    - debug: msg="{{ argocd_admin_password.stdout }}"
