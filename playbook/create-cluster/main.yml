@@ -33,11 +33,11 @@
     - name: Download kubectl
       get_url:
         url: "https://dl.k8s.io/release/{{ k8s_version }}/bin/linux/amd64/kubectl"
-        dest: "{{ bin_dir }}/kubectl"
+        dest: "{{ kubectl }}"
         mode: 0755
         owner: "{{ os_user }}"
 
     - name: Get all pods
-      command: "{{ bin_dir }}/kubectl get pods -A --kubeconfig {{ kube_config }}"
+      command: "{{ kubectl }} get pods -A "
       register: get_pods
     - debug: msg="{{ get_pods.stdout.split('\n') }}"

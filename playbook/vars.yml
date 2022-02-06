@@ -1,6 +1,9 @@
 docker_install_compose: false
 os_user: vagrant
-home_dir: "/home/{{ os_user }}"
 bin_dir: /usr/local/bin
 cluster_name: kind
-kube_config: "{{ home_dir }}/.kube/config"
+
+home_dir: "/home/{{ os_user }}"
+kube_config: "--kubeconfig {{ home_dir }}/.kube/config"
+kubectl: "{{ bin_dir }}/kubectl {{ kube_config }}"
+helm: "{{ bin_dir }}/kubectl {{ kube_config }}"

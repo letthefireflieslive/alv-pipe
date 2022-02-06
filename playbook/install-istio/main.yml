@@ -23,25 +23,25 @@
       command: "{{ bin_dir }}/helm repo update"
 
     - name: Create istio namespace
-      command: "{{ bin_dir }}/kubectl --kubeconfig {{ kube_config }} create namespace {{ istio_namespace }}"
+      command: "{{ kubectl }}  create namespace {{ istio_namespace }}"
       ignore_errors: yes
 
     - name: Install istio base chart
-      command: "{{ bin_dir }}/helm --kubeconfig {{ kube_config }} install istio-base istio/base -n {{ istio_namespace }}"
+      command: "{{ helm }} install istio-base istio/base -n {{ istio_namespace }}"
       ignore_errors: yes
 
     - name: Helm install istiod
-      command: "{{ bin_dir }}/helm --kubeconfig {{ kube_config }} install istiod istio/istiod -n {{ istio_namespace }} --wait"
+      command: "{{ helm }} install istiod istio/istiod -n {{ istio_namespace }} --wait"
       ignore_errors: yes
 
     - name: Create istio ingressgateway namespace
-      command: "{{ bin_dir }}/kubectl --kubeconfig {{ kube_config }} create namespace {{ istio_ingress_namespace }}"
+      command: "{{ kubectl }}  create namespace {{ istio_ingress_namespace }}"
       ignore_errors: yes
 
     - name: Istio inject ingress gateway namespace
-      command: "{{ bin_dir }}/kubectl --kubeconfig {{ kube_config }} label namespace {{ istio_ingress_namespace }} istio-injection=enabled"
+      command: "{{ kubectl }}  label namespace {{ istio_ingress_namespace }} istio-injection=enabled"
       ignore_errors: yes
 
     - name: Helm install ingress gateway
-      command: "{{ bin_dir }}/helm --kubeconfig {{ kube_config }} install {{ istio_ingress_namespace }} istio/gateway -n {{ istio_ingress_namespace }} --wait"
+      command: "{{ helm }} install {{ istio_ingress_namespace }} istio/gateway -n {{ istio_ingress_namespace }} --wait"
       ignore_errors: yes
