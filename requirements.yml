@@ -11,3 +11,6 @@ roles:
 
   - name: andrewrothstein.kubernetes-helm
     version: v2.0.11
+
+  - name: andrewrothstein.istio
+    version: v1.2.17

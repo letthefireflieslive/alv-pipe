@@ -13,11 +13,10 @@
     - argocd_manifest_filename: manifest-argocd_v2.2.5.yml
     - temp_argocd_manifest_filename: "/tmp/{{ argocd_manifest_filename }}"
 
-  tasks:
-    - name: Create argocd namespace
-      command: "{{ kubectl }}  create namespace {{ argocd_namespace }}"
-      ignore_errors: yes
+  roles:
+    - { role: andrewrothstein.kubernetes-helm, kubernetes_helm_ver: v3.7.2 }
 
+  tasks:
     - name: Upload argocd controller manifest
       copy:
         src: "./{{ argocd_manifest_filename }}"
@@ -26,8 +25,8 @@
     - name: Install argocd
       command: "{{ kubectl }} apply -n {{ argocd_namespace }} -f {{ temp_argocd_manifest_filename }}"
 
-    - name: Wait for argocd pods to be ready
-      shell: "{{ kubectl }} wait --namespace=kube-system --for=condition=Ready pods --selector tier=control-plane --timeout=600s"
+    - name: Wait for argocd-server rollout
+      shell: "{{ kubectl }} --namespace {{ argocd_namespace }} rollout status deployment argocd-server "
       register: argocd_pods_ready
     - debug: msg="{{ argocd_pods_ready.stdout.split('\n') }}"
 
@@ -35,3 +34,12 @@
       command: "{{ kubectl }} -n {{ argocd_namespace }} get secret argocd-initial-admin-secret -o jsonpath='{.data.password}'"
       register: argocd_base64_admin_password
     - debug: msg="{{ argocd_base64_admin_password.stdout | b64decode }}"
+
+    - name: Upload argocd istio virtual service
+      copy:
+        src: ./manifest-istio-virtualservice.yml
+        dest: /tmp/manifest-istio-virtualservice.yml
+
+    - name: Apply virtual service
+      command: "{{ kubectl }} apply -f /tmp/manifest-istio-virtualservice.yml"
+

@@ -10,38 +10,41 @@
 
   vars:
     - istio_namespace: istio-system
-    - istio_ingress_namespace: istio-ingress
 
   roles:
-    - { role: andrewrothstein.kubernetes-helm, kubernetes_helm_ver: v3.7.2 }
+    - { role: andrewrothstein.istio, istio_ver: 1.12.1 }
 
   tasks:
-    - name: Configure Helm Repo
-      command: "{{ bin_dir }}/helm repo add istio https://istio-release.storage.googleapis.com/charts"
+    - name: Install istio operator
+      command: "{{ istioctl }} operator init"
 
-    - name: Helm Repo Update
-      command: "{{ bin_dir }}/helm repo update"
+    - name: Upload istio operator demo
+      copy:
+        src: ./istio-operator-demo.yml
+        dest: /tmp/istio-operator-demo.yml
 
-    - name: Create istio namespace
-      command: "{{ kubectl }}  create namespace {{ istio_namespace }}"
-      ignore_errors: yes
+    - name: Apply istio operator demo
+      command: "{{ kubectl }} -n {{ istio_namespace }} apply -f /tmp/istio-operator-demo.yml"
 
-    - name: Install istio base chart
-      command: "{{ helm }} install istio-base istio/base -n {{ istio_namespace }}"
-      ignore_errors: yes
+    - name: Pause for 1 minute
+      pause:
+        minutes: 1
 
-    - name: Helm install istiod
-      command: "{{ helm }} install istiod istio/istiod -n {{ istio_namespace }} --wait"
-      ignore_errors: yes
+    - name: Add externalIP to ingress-gateway
+      shell: "{{ kubectl }} --namespace {{ istio_namespace }} patch svc istio-ingressgateway -n istio-system -p '{\"spec\": {\"type\": \"LoadBalancer\", \"externalIPs\":[\"55.55.55.5\"]}}'"
 
-    - name: Create istio ingressgateway namespace
-      command: "{{ kubectl }}  create namespace {{ istio_ingress_namespace }}"
-      ignore_errors: yes
+    - name: Upload cluster ingress gateway
+      copy:
+        src: ./cluster-gateway.yml
+        dest: /tmp/cluster-gateway.yml
 
-    - name: Istio inject ingress gateway namespace
-      command: "{{ kubectl }}  label namespace {{ istio_ingress_namespace }} istio-injection=enabled"
-      ignore_errors: yes
+    - name: Apply cluster-gateway.yml
+      command: "{{ kubectl }} -n {{ istio_namespace }} apply -f  /tmp/cluster-gateway.yml"
 
-    - name: Helm install ingress gateway
-      command: "{{ helm }} install {{ istio_ingress_namespace }} istio/gateway -n {{ istio_ingress_namespace }} --wait"
-      ignore_errors: yes
+    - name: Upload ingressgateway service
+      copy:
+        src: ./cluster-gateway-svc.yml
+        dest: /tmp/cluster-gateway-svc.yml
+
+    - name: Apply ingressgateway service
+      command: "{{ kubectl }} -n {{ istio_namespace }} apply -f  /tmp/cluster-gateway-svc.yml"

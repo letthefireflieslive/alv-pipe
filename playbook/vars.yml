@@ -6,4 +6,5 @@ cluster_name: kind
 home_dir: "/home/{{ os_user }}"
 kube_config: "--kubeconfig {{ home_dir }}/.kube/config"
 kubectl: "{{ bin_dir }}/kubectl {{ kube_config }}"
-helm: "{{ bin_dir }}/kubectl {{ kube_config }}"
+helm: "{{ bin_dir }}/helm {{ kube_config }}"
+istioctl: "{{ bin_dir }}/istioctl {{ kube_config }}"

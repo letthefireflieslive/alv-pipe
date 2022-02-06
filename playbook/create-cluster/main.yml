@@ -12,10 +12,10 @@
     k8s_version: v1.21.1
 
   tasks:
-#    - name: Copy kind-config.yml
-#      copy:
-#        src: ./manifest-kind-config.yml
-#        dest: "{{ home_dir }}/kind-config.yml"
+    - name: Copy kind-config.yml
+      copy:
+        src: ./kind-config.yml
+        dest: "{{ home_dir }}/kind-config.yml"
 
     - name: Get existing Cluster
       command: "{{ bin_dir }}/kind get clusters"
@@ -25,6 +25,7 @@
       command: |
         "{{ bin_dir }}"/kind create cluster 
         --name "{{ cluster_name }}" 
+        --config "{{ home_dir }}"/kind-config.yml 
         --kubeconfig "{{ home_dir }}"/.kube/config
         --image kindest/node:"{{ k8s_version }}" 
         --wait 5m
