@@ -30,6 +30,20 @@ Running specific play
 
 `ansible-playbook setup.yml -i inventory/local --tags [vm,k8s,ss]`
 
+## /etc/hosts
+    55.55.55.5  box.local
+    55.55.55.5  argo.box.local
+    55.55.55.5  dev.box.local
+    55.55.55.5  qa.box.local
+    55.55.55.5  staging.box.local
+
+## (Optional) Install agrocd CLI
+
+## ArgoCD Login
+`argocd login argo.box.local`
+
+Get the password from **Retrieve default 'admin' password task**
+
 ## Tested
 - macOS Big Sur 11.6.2
 - vagrant 2.2.18

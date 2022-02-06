@@ -7,7 +7,7 @@ spec:
   gateways:
     - istio-system/ingress-gateway
   hosts:
-    - 55.55.55.5
+    - argo.box.local
   http:
     - match:
         - uri:
