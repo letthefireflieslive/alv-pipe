@@ -31,11 +31,11 @@ Running specific play
 `ansible-playbook setup.yml -i inventory/local --tags [vm,k8s,ss]`
 
 ## /etc/hosts
-    55.55.55.5  box.local
-    55.55.55.5  argo.box.local
-    55.55.55.5  dev.box.local
-    55.55.55.5  qa.box.local
-    55.55.55.5  staging.box.local
+    55.55.55.55  box.local
+    55.55.55.55  argo.box.local
+    55.55.55.55  dev.box.local
+    55.55.55.55  qa.box.local
+    55.55.55.55  staging.box.local
 
 ## (Optional) Install agrocd CLI
 
