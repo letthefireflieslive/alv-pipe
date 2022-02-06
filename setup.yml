@@ -3,4 +3,4 @@
 - import_playbook: playbook/create-cluster/main.yml
 - import_playbook: playbook/install-sealed-secret/main.yml
 - import_playbook: playbook/install-istio/main.yml
-#- import_playbook: playbook/install-argo/main.yml
+- import_playbook: playbook/install-argo-cd/main.yml
