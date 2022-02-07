@@ -74,8 +74,9 @@ Just run your playbook again, it's idempotent anyway :)
 - ansible 2.9.20
 
 ## Todos
-- Handle remote VM deployment
+- Handle remote VM provisioning
 - Deploy sample application
 - Standardize Manifest names
 - Convert Plays to Ansible Roles
-- Handle cloud provisioning & deployment
+- Handle AWS|Azure|GCP provisioning & deployment
+
