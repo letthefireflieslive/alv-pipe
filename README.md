@@ -2,10 +2,18 @@
 
 _VirtualBox + K8s + Kaniko + Argo + Istio + Sealed Secrets_
 
+NOTE: This is currently designed to work for your local machine
+
 # Requirements
+
 - vagrant
 - ansible 
-- 16G memory
+- 32G free memory
+
+```diff
++  working fine #c5f015 with 13G free memory and no apps deployed yet
+-   shuts down my 16G laptop when I try to deploy Argo App :(
+```  
 
 # Create Machine
 `vagrant up`
@@ -29,7 +37,7 @@ this will install
 
 ###  Optional: Running specific play
 
-`ansible-playbook setup.yml -i inventory/local --tags [kind,docker,k8s,ss]`
+`ansible-playbook setup.yml -i inventory/local --tags [kind,docker,k8s,ss,argo]`
 
 ### Optional: Setup your /etc/hosts 
 feel free to customize
