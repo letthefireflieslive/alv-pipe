@@ -42,4 +42,3 @@
 
     - name: Apply virtual service
       command: "{{ kubectl }} apply -f /tmp/manifest-istio-virtualservice.yml"
-
