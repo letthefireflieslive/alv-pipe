@@ -11,7 +11,7 @@ NOTE: This is currently designed to work for your local machine
 - 32G free memory (untested estimate)
 
 ```diff
-+  working fine #c5f015 with 13G free memory and no apps deployed yet
++  working fine with 13G free memory and no apps deployed yet
 -   shuts down my 16G laptop when I start deploying apps in Argo CRD :(
 ```  
 
