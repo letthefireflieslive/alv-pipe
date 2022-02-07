@@ -32,7 +32,6 @@ this will install
 - install bitnami sealed secret v0.17.3
 - istio v1.12.1
 - argo v2.2.25+8
-- test Springboot Application
 
 
 ###  Optional: Running specific play
@@ -63,9 +62,10 @@ Get the initial admin password from _TASK [ Retrieve default 'admin' password ]_
 
 # Issues
 
-1. "Request failed: <urlopen error [Errno -2] Name or service not known>"
+> "Request failed: <urlopen error [Errno -2] Name or service not known>"
 
-Just run your playbook again, it's idempotent anyway :)
+
+**Solution**: Just run your playbook again, it's idempotent anyway :)
 
 ## Tested
 - macOS Big Sur 11.6.2
