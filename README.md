@@ -73,3 +73,8 @@ Just run your playbook again, it's idempotent anyway :)
 - virtualbox 6.1.28
 - ansible 2.9.20
 
+## Todos
+- Adjust code to handle remote VMs
+- Deploy sample application
+- Standardize Manifest names
+- Convert Plays to Ansible Roles
