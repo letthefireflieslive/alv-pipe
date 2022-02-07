@@ -4,3 +4,6 @@
 - import_playbook: playbook/install-sealed-secret/main.yml
 - import_playbook: playbook/install-istio/main.yml
 - import_playbook: playbook/install-argo-cd/main.yml
+
+#TODO Standardize Manifest names
+#TODO Convert Plays to Ansible Roles
