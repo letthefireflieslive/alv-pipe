@@ -1,9 +1,10 @@
-# Kanirgo CICD Infra Initializer
+# DreamPipe CICD Infra Initializer
 
 _K8s + Kaniko + Argo + Istio + Sealed Secrets_
 
 ### Disclaimer 
-This project is not intended for production use. It is meant for playground, demo or POC. 
+This project is not intended for production use. 
+It is meant for playground, demo or POC.  
 
 # Requirement
 - ansible
@@ -18,7 +19,7 @@ This project is not intended for production use. It is meant for playground, dem
 - vagrant
 
 ```
-cd provision
+cd provision/local
 vagrant up
 ```
 
