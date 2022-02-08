@@ -17,7 +17,10 @@ This project is not intended for production use. It is meant for playground, dem
 - 32G free memory 
 - vagrant
 
-`vagrant up`
+```
+cd provision
+vagrant up
+```
 
 ### Optional: Setup your /etc/hosts
 feel free to customize
