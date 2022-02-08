@@ -1,4 +1,4 @@
-# DreamPipe CICD Infra Initializer
+# NoTouch CICD Infra Initializer
 
 _K8s + Kaniko + Argo + Istio + Sealed Secrets_
 
