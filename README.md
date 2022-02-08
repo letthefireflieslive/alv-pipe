@@ -3,8 +3,12 @@
 _K8s + Kaniko + Argo + Istio + Sealed Secrets_
 
 ### Disclaimer 
+The project is young. 
 This project is not intended for production use. 
-It is meant for playground, demo or POC.  
+It is meant for playground, demo or POC.
+
+# Goal
+Create a DevOps dream pipeline.. live on its own, self healing and requires less touching. 
 
 # Requirement
 - ansible
