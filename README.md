@@ -2,66 +2,24 @@
 
 _K8s + Kaniko + Argo + Istio + Sealed Secrets_
 
-NOTE: This is currently designed to work for your local machine
+### Disclaimer 
+This project is not intended for production use. It is meant for playground, demo or POC. 
 
-# Requirements
+# Requirement
 - ansible
-- 32G free memory (untested estimate)
 
 # Install Playbook Dependencies
 `ansible-galaxy install -r requirements.yml`
 
-## Option 1 - Deploy Pipeline in Local Machine
+# Provision Machine
+## Option 1: Local
 ### Requirements
+- 32G free memory 
 - vagrant
 
-```diff
-+  working fine with 13G free memory and no apps deployed yet
--   shuts down my 16G laptop when I start deploying apps in Argo CRD :(
-```
-### Provision 
 `vagrant up`
-### Install K8s, Istio, Sealed Secret, Argo
-`ansible-playbook setup.yml -i inventory/local`
 
-## Option 2 - Deploy Pipeline in Non-existing Linode Resources
-### Requirements
-- kubectl
-- kubeseal
-- helm CLI
-- linode subscription 
-- terraform (tested in version N)
-### Provision Resource
-`terraform apply`
-### Install Istio, Sealed Secret, Argo
-`ansible-playbook setup.yml -i inventory/cloud --skip-tags docker,kind`
-
-## Option 3 - Deploy Pipeline in an existing Cluster
-### Requirements
-- kubectl
-- kubeseal
-- helm CLI
-- linode subscription
-- terraform (tested in version N)
-- kubeconfig that has necessary permissions
-  - create namespace
-  - write access to istio namespace
-### Install K8s, Istio, Sealed Secret, Argo
-`ansible-playbook setup.yml -i inventory/cloud --skip-tags docker,kind -e kubeconfig=./kubeconfig-path`
-
-this will install 
-- docker ce-20.10.12
-- kind v0.11.1 
-- k8s v1.21.1
-- install kubeseal v0.16.0
-- install bitnami sealed secret v0.17.3
-- istio v1.12.1
-- argo v2.2.25+8
-
-###  Optional: Running specific play
-`ansible-playbook setup.yml -i inventory/local --tags [kind,docker,k8s,ss,argo]`
-
-### Optional: Setup your /etc/hosts 
+### Optional: Setup your /etc/hosts
 feel free to customize
 
     55.55.55.55  box.local
@@ -70,6 +28,42 @@ feel free to customize
     55.55.55.55  qa.box.local
     55.55.55.55  staging.box.local
 #### Assumption: 55.55.55.55 is not in used
+
+## Option 2: Linode
+### Requirements
+- 32G free memory 
+- terraform CLI
+
+```
+terraform plan
+terraform apply
+```
+
+# Install
+## Prerequisite
+Update your ansible host at `./inventory/*`
+
+## Install K8s, Istio, Sealed Secret, Argo
+### Option 1: Local
+`ansible-playbook setup.yml -i inventory/local`
+### Option 2: Remote
+`ansible-playbook setup.yml -i inventory/remote`
+### Option 3: Existing cluster
+#### Prerequisite
+- kubeconfig that has necessary permissions
+  - create namespace
+  - write access to istio namespace
+
+`ansible-playbook setup.yml -i inventory/remote --skip-tags docker,kind -e kubeconfig=./kubeconfig-path`
+
+# Components
+- docker ce-20.10.12
+- kind v0.11.1 
+- k8s v1.21.1
+- install kubeseal v0.16.0
+- install bitnami sealed secret v0.17.3
+- istio v1.12.1
+- argo v2.2.25+8
 
 ### Recommended and Optional 
 [Install Argo CD CLI](https://argo-cd.readthedocs.io/en/stable/cli_installation/)
@@ -97,9 +91,10 @@ Get the initial admin password from _TASK [ Retrieve default 'admin' password ]_
 - ansible 2.9.20
 
 ## Todos
+- Use kubectl only, remove helm and istioctl
+- Convert Plays to Ansible Roles
 - Handle remote VM provisioning
 - Deploy sample application
 - Standardize Manifest names
-- Convert Plays to Ansible Roles
 - Handle AWS|Azure|GCP provisioning & deployment
 
