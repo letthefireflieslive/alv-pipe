@@ -1,28 +1,53 @@
 # Kanirgo CICD Infra Initializer
 
-_VirtualBox + K8s + Kaniko + Argo + Istio + Sealed Secrets_
+_K8s + Kaniko + Argo + Istio + Sealed Secrets_
 
 NOTE: This is currently designed to work for your local machine
 
 # Requirements
-
-- vagrant
-- ansible 
+- ansible
 - 32G free memory (untested estimate)
-
-```diff
-+  working fine with 13G free memory and no apps deployed yet
--   shuts down my 16G laptop when I start deploying apps in Argo CRD :(
-```  
-
-# Create Machine
-`vagrant up`
 
 # Install Playbook Dependencies
 `ansible-galaxy install -r requirements.yml`
 
-# Setup
+## Option 1 - Deploy Pipeline in Local Machine
+### Requirements
+- vagrant
+
+```diff
++  working fine with 13G free memory and no apps deployed yet
+-   shuts down my 16G laptop when I start deploying apps in Argo CRD :(
+```
+### Provision 
+`vagrant up`
+### Install K8s, Istio, Sealed Secret, Argo
 `ansible-playbook setup.yml -i inventory/local`
+
+## Option 2 - Deploy Pipeline in Non-existing Linode Resources
+### Requirements
+- kubectl
+- kubeseal
+- helm CLI
+- linode subscription 
+- terraform (tested in version N)
+### Provision Resource
+`terraform apply`
+### Install Istio, Sealed Secret, Argo
+`ansible-playbook setup.yml -i inventory/cloud --skip-tags docker,kind`
+
+## Option 3 - Deploy Pipeline in an existing Cluster
+### Requirements
+- kubectl
+- kubeseal
+- helm CLI
+- linode subscription
+- terraform (tested in version N)
+- kubeconfig that has necessary permissions
+  - create namespace
+  - write access to istio namespace
+### Install K8s, Istio, Sealed Secret, Argo
+`ansible-playbook setup.yml -i inventory/cloud --skip-tags docker,kind -e kubeconfig=./kubeconfig-path`
 
 this will install 
 - docker ce-20.10.12
@@ -33,9 +58,7 @@ this will install
 - istio v1.12.1
 - argo v2.2.25+8
 
-
 ###  Optional: Running specific play
-
 `ansible-playbook setup.yml -i inventory/local --tags [kind,docker,k8s,ss,argo]`
 
 ### Optional: Setup your /etc/hosts 

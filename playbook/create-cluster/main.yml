@@ -3,7 +3,7 @@
   hosts: vagrantbox
   become: yes
   tags:
-    - k8s
+    - kind
 
   vars_files:
     - ../vars.yml
