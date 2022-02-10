@@ -33,18 +33,32 @@
     - name: Add externalIP to ingress-gateway
       shell: "{{ kubectl }} --namespace {{ istio_namespace }} patch svc istio-ingressgateway -n istio-system -p '{\"spec\": {\"type\": \"LoadBalancer\", \"externalIPs\":[\"55.55.55.5\"]}}'"
 
-    - name: Upload cluster ingress gateway
+    - name: Upload cluster ingress gateway - local
       copy:
-        src: ./cluster-gateway.yml
+        src: ./cluster-gateway-local.yml
         dest: /tmp/cluster-gateway.yml
+      when: vm is match("local")
+
+    - name: Upload cluster ingress gateway - remote
+      copy:
+        src: ./cluster-gateway-remote.yml
+        dest: /tmp/cluster-gateway.yml
+      when: vm is match("remote")
 
     - name: Apply cluster-gateway.yml
       command: "{{ kubectl }} -n {{ istio_namespace }} apply -f  /tmp/cluster-gateway.yml"
 
-    - name: Upload ingressgateway service
+    - name: Upload ingressgateway service - local
       copy:
-        src: ./cluster-gateway-svc.yml
+        src: ./cluster-gateway-svc-local.yml
         dest: /tmp/cluster-gateway-svc.yml
+      when: vm is match("local")
+
+    - name: Upload ingressgateway service - remote
+      copy:
+        src: ./cluster-gateway-svc-remote.yml
+        dest: /tmp/cluster-gateway-svc.yml
+      when: vm is match("remote")
 
     - name: Apply ingressgateway service
       command: "{{ kubectl }} -n {{ istio_namespace }} apply -f  /tmp/cluster-gateway-svc.yml"

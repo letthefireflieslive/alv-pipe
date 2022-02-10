@@ -110,10 +110,10 @@ Get the initial admin password from _TASK [ Retrieve default 'admin' password ]_
 - ansible 2.9.20
 
 ## Todos
+- Deploy sample application
 - Use kubectl only, remove helm and istioctl
 - Convert Plays to Ansible Roles
-- Handle remote VM provisioning
-- Deploy sample application
 - Standardize Manifest names
-- Handle AWS|Azure|GCP provisioning & deployment
+- Use kustomize to abstract local and remote host configs
+
 

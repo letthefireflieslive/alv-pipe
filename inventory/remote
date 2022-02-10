@@ -1,2 +1,5 @@
 [single_node_k8s]
-REPLACEME ansible_user=root ansible_port=22
+192.53.173.177 ansible_user=root ansible_port=22
+
+[single_node_k8s:vars]
+vm=remote

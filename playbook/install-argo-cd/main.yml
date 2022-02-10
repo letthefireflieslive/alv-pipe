@@ -35,10 +35,18 @@
       register: argocd_base64_admin_password
     - debug: msg="{{ argocd_base64_admin_password.stdout | b64decode }}"
 
-    - name: Upload argocd istio virtual service
+    - name: Upload argocd istio virtual service - local
       copy:
-        src: ./manifest-istio-virtualservice.yml
+        src: ./manifest-istio-virtualservice-local.yml
         dest: /tmp/manifest-istio-virtualservice.yml
+      when: vm is match("local")
+
+    - name: Upload argocd istio virtual service - remote
+      copy:
+        src: ./manifest-istio-virtualservice-remote.yml
+        dest: /tmp/manifest-istio-virtualservice.yml
+      when: vm is match("remote")
+
 
     - name: Apply virtual service
       command: "{{ kubectl }} apply -f /tmp/manifest-istio-virtualservice.yml"

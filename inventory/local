@@ -1,2 +1,5 @@
 [single_node_k8s]
 localhost ansible_user=vagrant ansible_port=5022 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+[single_node_k8s:vars]
+vm=local
