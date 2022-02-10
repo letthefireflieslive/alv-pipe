@@ -65,7 +65,7 @@ token = ""
 
    `terraform output | cut -d \" -f2` 
 7. Replace ansible `inventory/remote` IP/host with this
-8. Go back to root of project `cd ..`
+8. Go back to root of project `cd ../..`
 
 # Install
 
