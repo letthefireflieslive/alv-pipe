@@ -1,14 +1,14 @@
-# NoTouch CICD Infra Initializer
+# UC CICD Infra Initializer
 
 _K8s + Kaniko + Argo + Istio + Sealed Secrets_
 
 ### Disclaimer 
 The project is young. 
 This project is not intended for production use. 
-It is meant for playground, demo or POC.
+It is meant for playground, demo or POC. We'll ge there.. .
 
 # Goal
-Create a DevOps dream pipeline.. live on its own, self healing and requires less touching. 
+Create a DevOps pipeline.. live on its own, self healing and requires less attention. 
 
 # Requirement
 - ansible
@@ -44,22 +44,30 @@ append to your /etc/hosts (feel free to customize)
   with read/write access to Linodes
 - terraform CLI
 
-### Prerequisites
-
-
+1. `cd provision/linode`
+2. create a tfvars file  `./provision/linode/demo.tfvars` and populate the values
 ```
-export TF_VAR_token=[REPLACE W/ YOUR PERSONAL ACCESS TOKEN]
-export TF_VAR_root_pass=[REPLACE W/ ROOT PASSWORD YOU CAN THINK OF OR GENERATE]
-
-cd provision/linode
-terraform plan
-terraform validate 
-terraform apply 
+authorized_keys  = [""]
+root_pass = ""
+token = ""
 ```
+
+3. Check what will be applied
+
+   `terraform plan -var-file=demo.tfvars`
+4. Validate the tf files format
+
+   `terraform validate` 
+5. Create the resource
+
+   `terraform apply -var-file=demo.tfvars `
+6. Extract the public IP
+
+   `terraform output | cut -d \" -f2` 
+7. Replace ansible `inventory/remote` IP/host with this
+8. Go back to root of project `cd ..`
 
 # Install
-## Prerequisite
-Update your ansible host at `./inventory/*`
 
 ## Install K8s, Istio, Sealed Secret, Argo
 ### Option 1: Local
