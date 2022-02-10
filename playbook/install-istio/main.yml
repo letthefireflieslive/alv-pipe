@@ -1,6 +1,6 @@
 ---
 - name: Install istio tools
-  hosts: vagrantbox
+  hosts: single_node_k8s
   become: yes
   tags:
     - istio

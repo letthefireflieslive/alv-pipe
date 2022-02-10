@@ -1,6 +1,6 @@
 ---
 - name: Install Cluster Pre-requisites
-  hosts: vagrantbox
+  hosts: single_node_k8s
   become: yes
   tags:
     - docker

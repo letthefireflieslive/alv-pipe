@@ -1,6 +1,6 @@
 ---
 - name: Install sealed secret
-  hosts: vagrantbox
+  hosts: single_node_k8s
   become: yes
   tags:
     - ss

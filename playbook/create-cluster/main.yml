@@ -1,6 +1,6 @@
 ---
 - name: K8s Setup
-  hosts: vagrantbox
+  hosts: single_node_k8s
   become: yes
   tags:
     - kind

@@ -1,6 +1,6 @@
 ---
 - name: Install argo cd
-  hosts: vagrantbox
+  hosts: single_node_k8s
   become: yes
   tags:
     - argo
