@@ -74,13 +74,6 @@ token = ""
 `ansible-playbook setup.yml -i inventory/local`
 ### Option 2: Remote
 `ansible-playbook setup.yml -i inventory/remote`
-### Option 3: Existing cluster
-#### Prerequisite
-- kubeconfig that has necessary permissions
-  - create namespace
-  - write access to istio namespace
-
-`ansible-playbook setup.yml -i inventory/remote --skip-tags docker,kind -e kubeconfig=./kubeconfig-path`
 
 # Components
 - docker ce-20.10.12
@@ -111,7 +104,7 @@ Get the initial admin password from _TASK [ Retrieve default 'admin' password ]_
 **Solution**: Just run your playbook again, it's idempotent anyway :)
 
 ## Tested
-- macOS Big Sur 11.6.2
+- macOS Big Sur 11.6.2 (ansible runner)
 - vagrant 2.2.18
 - virtualbox 6.1.28
 - ansible 2.9.20
