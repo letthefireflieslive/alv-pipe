@@ -1,5 +1,5 @@
 docker_install_compose: false
-os_user: vagrant
+os_user: t1
 bin_dir: /usr/local/bin
 cluster_name: kind
 

@@ -25,6 +25,7 @@ Create a DevOps pipeline.. live on its own, self healing and requires less atten
 ```
 cd provision/local
 vagrant up
+cd ../..
 ```
 
 ### Optional: Setup your /etc/hosts
