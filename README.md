@@ -28,7 +28,7 @@ vagrant up
 ```
 
 ### Optional: Setup your /etc/hosts
-feel free to customize
+append to your /etc/hosts (feel free to customize)
 
     55.55.55.55  box.local
     55.55.55.55  argo.box.local
@@ -39,12 +39,22 @@ feel free to customize
 
 ## Option 2: Linode
 ### Requirements
-- 32G free memory 
+- linode subscription
+- [personal access token](https://www.linode.com/docs/products/tools/linode-api/guides/get-access-token/) 
+  with read/write access to Linodes
 - terraform CLI
 
+### Prerequisites
+
+
 ```
+export TF_VAR_token=[REPLACE W/ YOUR PERSONAL ACCESS TOKEN]
+export TF_VAR_root_pass=[REPLACE W/ ROOT PASSWORD YOU CAN THINK OF OR GENERATE]
+
+cd provision/linode
 terraform plan
-terraform apply
+terraform validate 
+terraform apply 
 ```
 
 # Install
