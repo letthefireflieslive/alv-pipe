@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fetch admin kubeconfig from host to ansible runner
 - Convert playbook to ansible roles 
 
+## [1.1.2] - 2022-Feb-11
+
+### Removed
+- Creation of Staging and Production Argo projects. Will be moving it to 
+  [sample-argo-project-1](https://github.com/letthefireflieslive/sample-argo-project-1)
+
 ## [1.1.1] - 2022-Feb-11
 
 ### Added
