@@ -1,3 +1,6 @@
 **/.DS_Store
 *.retry
 .idea
+
+#for the files created when sed -i -e is used in macOSx
+*-e

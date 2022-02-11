@@ -98,7 +98,10 @@ append to your /etc/hosts (feel free to customize)
 [Install Argo CD CLI](https://argo-cd.readthedocs.io/en/stable/cli_installation/)
 
 ## Login
-`argocd login argo.box.local` or via browser `argo.box.local`
+### Local
+`argocd login argo.box.local` or via browser 
+### Remote
+`argocd login $public_ip/argo` or via browser 
 
 #### Get the password
 Get the initial admin password from _TASK [ Retrieve default 'admin' password ]_ ansible playbook task output 
