@@ -57,8 +57,3 @@
     - name: Apply smoke-test.yml
       command: "{{ kubectl }} -n smoke apply -f  /tmp/smoke-test.yml"
 
-    - name: Permit traffic to port 80
-      ansible.posix.firewalld:
-        port: 80/tcp
-        permanent: yes
-        state: enabled
