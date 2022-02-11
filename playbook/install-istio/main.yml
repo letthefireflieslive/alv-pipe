@@ -48,17 +48,11 @@
     - name: Apply cluster-gateway.yml
       command: "{{ kubectl }} -n {{ istio_namespace }} apply -f  /tmp/cluster-gateway.yml"
 
-    - name: Upload ingressgateway service - local
+    - name: Upload nginx smoke test manifest - remote
       copy:
-        src: ./cluster-gateway-svc-local.yml
-        dest: /tmp/cluster-gateway-svc.yml
-      when: vm is match("local")
-
-    - name: Upload ingressgateway service - remote
-      copy:
-        src: ./cluster-gateway-svc-remote.yml
-        dest: /tmp/cluster-gateway-svc.yml
+        src: ./smoke-test.yml
+        dest: /tmp/smoke-test.yml
       when: vm is match("remote")
 
-    - name: Apply ingressgateway service
-      command: "{{ kubectl }} -n {{ istio_namespace }} apply -f  /tmp/cluster-gateway-svc.yml"
+    - name: Apply smoke-test.yml
+      command: "{{ kubectl }} -n smoke apply -f  /tmp/smoke-test.yml"
