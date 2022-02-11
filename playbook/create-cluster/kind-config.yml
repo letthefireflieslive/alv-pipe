@@ -5,6 +5,7 @@ nodes:
     extraPortMappings:
       - containerPort: 30080
         hostPort: 80
-      - containerPort: 6443
-        hostPort: 6443
   - role: worker
+networking:
+  apiServerAddress: "0.0.0.0"
+  apiServerPort: 443
