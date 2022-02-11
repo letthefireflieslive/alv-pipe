@@ -13,9 +13,6 @@ Create a DevOps pipeline.. live on its own, self healing and requires less atten
 # Requirement
 - ansible
 
-# Install Playbook Dependencies
-`ansible-galaxy install -r requirements.yml`
-
 # Provision Machine
 ## Option 1: Local
 ### Requirements
@@ -78,6 +75,9 @@ append to your /etc/hosts (feel free to customize)
 
 
 # Install
+
+## Install Dependencies
+`ansible-galaxy install -r requirements.yml`
 
 ## Install K8s, Istio, Sealed Secret, Argo
 ### Option 1: Local
