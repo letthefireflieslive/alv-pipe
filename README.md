@@ -75,10 +75,8 @@ append to your /etc/hosts (feel free to customize)
 
 
 # Install
-
 ## Install Dependencies
 `ansible-galaxy install -r requirements.yml`
-
 ## Install K8s, Istio, Sealed Secret, Argo
 ### Option 1: Local
 `ansible-playbook setup.yml -i inventory/local`
