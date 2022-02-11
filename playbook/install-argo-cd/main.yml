@@ -51,11 +51,3 @@
     - name: Apply virtual service
       command: "{{ kubectl }} apply -f /tmp/manifest-istio-virtualservice.yml"
 
-    - name: Upload projects env project
-      copy:
-        src: ./manifest-argo-envs.yml
-        dest: /tmp/manifest-argo-envs.yml
-
-    - name: Apply argo project/env structure
-      command: "{{ kubectl }} apply -f /tmp/manifest-argo-envs.yml"
-
