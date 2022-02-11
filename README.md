@@ -99,7 +99,7 @@ append to your /etc/hosts (feel free to customize)
 ### Local
 `argocd login argo.box.local` or via browser 
 ### Remote
-`argocd login $public_ip/argo` or via browser 
+`argocd login $public_ip` or via browser 
 
 #### Get the password
 Get the initial admin password from _TASK [ Retrieve default 'admin' password ]_ ansible playbook task output 
