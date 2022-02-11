@@ -2,5 +2,9 @@
 *.retry
 .idea
 
+# Ignore .kube/config that will downloaded target Vms
+.kube/config
+
+
 #for the files created when sed -i -e is used in macOSx
 *-e
