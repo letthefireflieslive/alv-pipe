@@ -3,7 +3,7 @@
   hosts: single_node_k8s
   become: yes
   tags:
-    - kind
+    - k8s
 
   vars_files:
     - ../vars.yml
@@ -42,3 +42,15 @@
       command: "{{ kubectl }} get pods -A"
       register: get_pods
     - debug: msg="{{ get_pods.stdout.split('\n') }}"
+
+    - name: Download admin kubeconfig to ansible runner
+      fetch:
+        src: "{{ home_dir }}/.kube/config"
+        dest: ../../.kube/config
+        flat: yes
+
+    - name: Open port 6443 for kube-api server
+      ansible.posix.firewalld:
+        port: 6443/tcp
+        permanent: yes
+        state: enabled
