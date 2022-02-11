@@ -118,6 +118,7 @@ Get the initial admin password from _TASK [ Retrieve default 'admin' password ]_
 - macOS Big Sur 11.6.2 (ansible runner)
 - vagrant 2.2.18
 - virtualbox 6.1.28
+- terraform 1.1.5
 - ansible 2.9.20
 
 ## Todos
