@@ -47,11 +47,11 @@ append to your /etc/hosts (feel free to customize)
 
 1. `cd provision/linode`
 2. create a tfvars file  `./provision/linode/demo.tfvars` and populate the values
-```
-authorized_keys  = [""]
-root_pass = ""
-token = ""
-```
+    ```
+    authorized_keys  = [""]
+    root_pass = ""
+    token = ""
+    ```
 
 3. Check what will be applied
 
@@ -64,9 +64,18 @@ token = ""
    `terraform apply -var-file=demo.tfvars `
 6. Extract the public IP
 
-   `terraform output | cut -d \" -f2` 
-7. Replace ansible `inventory/remote` IP/host with this
-8. Go back to root of project `cd ../..`
+   `public_ip=$(terraform output | cut -d \" -f2)`
+
+7. Go back to root of project `cd ../..`
+
+9. Update IPs
+    ```
+    sed -i -e "s/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/$public_ip/g" inventory/remote
+    sed -i -e "s/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/$public_ip/g" playbook/install-istio/cluster-gateway-remote.yml
+    sed -i -e "s/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/$public_ip/g" playbook/install-istio/smoke-test.yml
+    sed -i -e "s/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/$public_ip/g" playbook/install-argo-cd/manifest-istio-virtualservice-remote.yml
+    ```
+
 
 # Install
 

@@ -1,5 +1,5 @@
 [single_node_k8s]
-192.53.173.177 ansible_user=root ansible_port=22
+0.0.0.0 ansible_user=root ansible_port=22
 
 [single_node_k8s:vars]
 vm=remote
