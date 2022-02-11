@@ -8,9 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Fetch admin kubeconfig from host to ansible runner
-- Add sample argo application to deploy
-- Guide for using argo and various use cases
-- Convert playbook to ansible roles
+- Convert playbook to ansible roles 
+
+## [1.1.1] - 2022-Feb-11
+
+### Added
+- Fetch admin kubeconfig from host to ansible runner
 
 ## [1.1.0] - 2022-Feb-11
 
